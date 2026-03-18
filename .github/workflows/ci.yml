@@ -8,17 +8,40 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - run: pip install -r requirements.txt
-      - run: pytest
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest
+
 
   docker-build:
     needs: test
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - run: docker build -t calculator-app .
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t calculator-app .
+
+      # 🔥 TASK 8 — ARTIFACT
+      - name: Create Artifact
+        run: zip -r build-package.zip .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: build-package.zip
