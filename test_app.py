@@ -1,14 +1,11 @@
-import pytest
-from app import app
+from app import add, multiply, divide
 
-@pytest.fixture
-def client():
-    app.config['TESTING'] = True
-    with app.test_client() as c:
-        yield c
+def test_add():
+    assert add(2,3) == 10   # ❌ intentionally wrong
 
-def test_home(client):
-    assert client.get('/').status_code == 200
+def test_multiply():
+    assert multiply(3,4) == 12
 
-def test_health(client):
-    assert client.get('/health').status_code == 200
+def test_divide():
+    assert divide(10,2) == 5
+
