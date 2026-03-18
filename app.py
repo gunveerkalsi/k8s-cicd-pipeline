@@ -1,13 +1,10 @@
-from flask import Flask
-app = Flask(__name__)
+def add(a, b):
+    return a + b
 
-@app.route('/')
-def home():
-    return 'Kubernetes Deployed App'
+def multiply(a, b):
+    return a * b
 
-@app.route('/health')
-def health():
-    return {'status': 'healthy'}, 200
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Division by zero")
+    return a / b
